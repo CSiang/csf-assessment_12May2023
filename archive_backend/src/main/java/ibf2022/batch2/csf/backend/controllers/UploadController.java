@@ -53,7 +53,7 @@ public class UploadController {
 		System.out.println("Content Type: " + file.getContentType());
 
 		//Need to do S3 upload here.....
-		imgRepo.upload(file, name, title, comment);
+		List<String> urlList = imgRepo.upload(file, name, title, comment);
 
 		String bundleId = arcRepo.recordBundle(name, title, comment);
 		JsonObject jo = Json.createObjectBuilder().add("bundleId", bundleId).build();
