@@ -1,0 +1,22 @@
+
+<div style="margin-top: 10vh; margin-left: 10%;">
+<h1>Photo Storage</h1>
+
+<table>
+    <tr>
+        <td></td>
+        <td>
+            <button [routerLink]="'/file'">Upload</button>
+        </td>
+    </tr>
+    <tr *ngFor="let b of bundles" [routerLink]="['/details', b.bundleId]">
+        <td>
+            {{b.title}}
+        </td>
+        <td>
+            {{b.date}}
+        </td>
+    </tr>
+</table>
+
+</div>

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import {lastValueFrom} from "rxjs"
+import { Bundle } from "../Model";
 
 @Injectable()
 export class HttpService{
@@ -26,9 +27,19 @@ export class HttpService{
     getBundle(id: string){
 
         const url = 'bundle/' + id
-        
+
         return lastValueFrom(this.http.get(url))
     }
+
+    getBundleList() {
+
+        return lastValueFrom(this.http.get('/bundles'))
+                .then(l => l as any[])
+                .then(i => i.map(j => j as Bundle ) )
+    }
+    // job.add("bundleId", doc.getString("bundleId"))
+    // .add("date", doc.getString("date"))
+    // .add("title", doc.getString("title"));
 
 
 

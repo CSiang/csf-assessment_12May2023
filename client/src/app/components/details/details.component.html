@@ -1,21 +1,25 @@
 
-<h3>The bundle Id: {{bundleId}}</h3>
-<div *ngIf="bundle">
-    <table>
-        <tr>
-            <td><h3>{{bundle.title}}</h3></td>
-        </tr>
-        <tr>
-            <td>
-                by {{bundle.name}} on {{bundle.date}}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                {{bundle.comments}}
-            </td>
-        </tr>
-    </table>
+<div style="margin-top: 10vh;  margin-left: 10%;">
+    
+    <h3>The bundle Id: {{bundleId}}</h3>
+    <div *ngIf="bundle">
+        <table>
+            <tr>
+                <td><h3>{{bundle.title}}</h3></td>
+            </tr>
+            <tr>
+                <td>
+                    by {{bundle.name}} on {{bundle.date}}
+                </td>
+            </tr>
+            <tr *ngIf="bundle.comments">
+                <td>
+                    {{bundle.comments}}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <button [routerLink]="['/']">Back</button>
+
 </div>
-<br>
-<button [routerLink]="['/']">Back</button>

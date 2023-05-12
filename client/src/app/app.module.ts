@@ -8,12 +8,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpService } from './Services/HttpService';
 import { DetailsComponent } from './components/details/details.component';
+import { ListComponent } from './components/list/list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UploadComponent,
-    DetailsComponent
+    DetailsComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 package ibf2022.batch2.csf.backend.repositories;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,13 +36,11 @@ public class ImageRepository {
 		try {
 			ZipInputStream zip = new ZipInputStream(file.getInputStream());	
             ZipEntry ze;
-			
             while ((ze = zip.getNextEntry()) != null) {
 	
 				System.out.println("new file.");
                 System.out.format("File: %s Size: %d\n",
                         ze.getName(), ze.getSize());
-                        // LocalDate.ofEpochDay(ze.getTime()));
 			
 			
 			// try (FileOutputStream fos = new FileOutputStream(filePath.toFile());
@@ -58,12 +57,6 @@ public class ImageRepository {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
-
-		// doc.append("bundleId", bundleId)
-		// 	.append("date", dateTimeString)
-		// 	.append("title", title)
-		// 	.append("name", name)
-		// 	.append("comments", comment);
 
 		   // Below are to set the metadata.
 		   Map<String, String> userData = new HashMap<>();

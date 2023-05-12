@@ -2,11 +2,13 @@ package ibf2022.batch2.csf.backend.repositories;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -36,7 +38,9 @@ public class ArchiveRepository {
 		String bundleId = UUID.randomUUID().toString().substring(0, 8);
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
-			"yyyy-MM-dd HH:mm:ss a");
+			"yyyy-MM-dd");
+			// DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
+			// 	"yyyy-MM-dd HH:mm:ss a");
 		LocalDateTime now = LocalDateTime.now();
 		String dateTimeString = now.format(formatter);
 
@@ -74,8 +78,14 @@ public class ArchiveRepository {
 	// Write the native mongo query that you will be using in this method
 	//
 	//
-	public Object getBundles(/* any number of parameters here */) {
-		return null;
+	// db.archives.find().sort( { date: -1, title: 1 } )
+	public List<Document> getBundles(/* any number of parameters here */) {
+		
+		Query query =Query.query(new Criteria())
+							.with(Sort.by(Sort.Direction.DESC, "date"))
+							.with(Sort.by(Sort.Direction.ASC, "title"));
+
+		return mgTemplate.find(query, Document.class, A_COL);
 	}
 
 

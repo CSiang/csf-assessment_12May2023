@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -25,9 +26,9 @@ import org.springframework.web.multipart.MultipartFile;
 import ibf2022.batch2.csf.backend.repositories.ArchiveRepository;
 import ibf2022.batch2.csf.backend.repositories.ImageRepository;
 import jakarta.json.Json;
+import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
-import jakarta.websocket.server.PathParam;
 
 @RestController
 public class UploadController {
@@ -41,7 +42,7 @@ public class UploadController {
 	// TODO: Task 2, Task 3, Task 4
 	@PostMapping(path = "upload", consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<String> fileUpload(@RequestPart MultipartFile file, 
-	@RequestPart String name, @RequestPart String title, @RequestPart String comment) throws IOException{
+	@RequestPart String name, @RequestPart String title, @RequestPart(required=false) String comment) throws IOException{
 
 		System.out.println("At upload file");
 
@@ -78,11 +79,18 @@ public class UploadController {
 		if(opt.isPresent()){
 			Document doc = opt.get();
 			JsonObjectBuilder job = Json.createObjectBuilder();
-				job.add("bundleId", doc.getString("bundleId"))
-					.add("date", doc.getString("date"))
-					.add("title", doc.getString("title"))
-					.add("name", doc.getString("name"))
-					.add("comments", doc.getString("comments")); 
+
+			if(doc.getString("comments") == null){
+				job.add("comments", JsonObject.NULL); 
+			} else {
+				job.add("comments", doc.getString("comments")); 
+			}
+				
+			job.add("bundleId", doc.getString("bundleId"))
+				.add("date", doc.getString("date"))
+				.add("title", doc.getString("title"))
+				.add("name", doc.getString("name"));
+
 
 			return ResponseEntity.ok().body(job.build().toString());
 		}
@@ -94,5 +102,30 @@ public class UploadController {
 	
 
 	// TODO: Task 6
+	@GetMapping(path="bundles")
+	public ResponseEntity<String> getBundleList(){
 
+		List<Document> docs=  arcRepo.getBundles();
+		JsonArrayBuilder jab = Json.createArrayBuilder();
+
+		if(docs.size()>0){
+			
+			for(Document doc: docs){
+				System.out.println(doc);
+				JsonObjectBuilder job = Json.createObjectBuilder();
+					
+				job.add("bundleId", doc.getString("bundleId"))
+					.add("date", doc.getString("date"))
+					.add("title", doc.getString("title"));
+
+				jab.add(job.build());
+			}
+
+			return ResponseEntity.ok().body(jab.build().toString());
+		}
+
+		JsonObject joFail = Json.createObjectBuilder().add("error", "File not found.").build();
+
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(joFail.toString());
+	}
 }
