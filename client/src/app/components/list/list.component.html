@@ -5,11 +5,11 @@
 <table>
     <tr>
         <td></td>
-        <td>
-            <button [routerLink]="'/file'">Upload</button>
+        <td class="button">
+            <button style="font-size: large;" [routerLink]="'/file'">Upload</button>
         </td>
     </tr>
-    <tr *ngFor="let b of bundles" [routerLink]="['/details', b.bundleId]">
+    <tr class="content" *ngFor="let b of bundles" [routerLink]="['/details', b.bundleId]">
         <td>
             {{b.title}}
         </td>

@@ -1,7 +1,6 @@
 
 <div style="margin-top: 10vh;  margin-left: 10%;">
-    
-    <h3>The bundle Id: {{bundleId}}</h3>
+
     <div *ngIf="bundle">
         <table>
             <tr>
@@ -13,8 +12,8 @@
                 </td>
             </tr>
             <tr *ngIf="bundle.comments">
-                <td>
-                    {{bundle.comments}}
+                <td style="padding-top: 15px;">
+                    <p>{{bundle.comments}}</p>
                 </td>
             </tr>
         </table>
