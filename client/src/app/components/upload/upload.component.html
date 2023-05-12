@@ -1,0 +1,52 @@
+
+<div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <table>
+            <tr>
+                <td>
+                    <label for="name" >Name:</label>
+                </td>
+                <td>
+                    <input type="text" formControlName="name">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="name">Title:</label>
+                </td>
+                <td>
+                    <input type="text" formControlName="title">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="name">Comments:</label>
+                </td>
+                <td>
+                     <textarea name="comment" id="" cols="30" rows="10" formControlName="comment"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="name">Archive:</label>
+                </td>
+                <td>
+                     <!-- <input type="file" #fileUpload > -->
+                     <input type="file"(change)="getFile($event)">
+                </td>
+            </tr>
+            <div style="display: flex;">
+                <div>
+                    <button [routerLink]="['/']">Cancel</button>
+                </div>
+                <div>
+                    <button type="submit" [disabled]="disable()">Submit</button>
+                </div>
+            </div>
+        </table>
+    </form>
+
+
+
+</div>
