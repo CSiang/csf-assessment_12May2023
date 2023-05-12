@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { HttpService } from 'src/app/Services/HttpService';
 
 @Component({
@@ -12,7 +13,7 @@ export class UploadComponent implements OnInit{
 file !: any
 form !: FormGroup
 
-constructor(private fb: FormBuilder, private httpSvc: HttpService){}
+constructor(private fb: FormBuilder, private httpSvc: HttpService, private router: Router){}
 
 ngOnInit(): void {
   this.form = this.createForm()
@@ -48,6 +49,9 @@ createForm(){
     // .then( res => this.postIds.push(res)
     // )  
     this.httpSvc.upload(this.form,this.file)
+                    .then((v:any) => this.router.navigate(['/details', v['bundleId']]))
+                    .catch((e:any) => alert("Error: "+e['error']['error']))
+
     this.form.reset()
   }
   

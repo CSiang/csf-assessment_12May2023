@@ -1,0 +1,21 @@
+
+<h3>The bundle Id: {{bundleId}}</h3>
+<div *ngIf="bundle">
+    <table>
+        <tr>
+            <td><h3>{{bundle.title}}</h3></td>
+        </tr>
+        <tr>
+            <td>
+                by {{bundle.name}} on {{bundle.date}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{bundle.comments}}
+            </td>
+        </tr>
+    </table>
+</div>
+<br>
+<button [routerLink]="['/']">Back</button>

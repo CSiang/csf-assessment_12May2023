@@ -10,10 +10,9 @@ export class HttpService{
 
     upload(form: FormGroup, file: Blob ){
 
-        
-        const header = new HttpHeaders()
-                    .set('content-type','multipart/form-data')
-                    .set('Accept', 'application/json')
+        // const header = new HttpHeaders()
+        //             .set('content-type','multipart/form-data')
+        //             .set('Accept', 'application/json')
 
         const formData = new FormData()
         formData.set("name",form.value['name'] )
@@ -22,7 +21,15 @@ export class HttpService{
         formData.append("file", file)
 
         return lastValueFrom(this.http.post("/upload", formData))
-
     }
+
+    getBundle(id: string){
+
+        const url = 'bundle/' + id
+        
+        return lastValueFrom(this.http.get(url))
+    }
+
+
 
 }

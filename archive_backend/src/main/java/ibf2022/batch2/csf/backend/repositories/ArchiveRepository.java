@@ -2,11 +2,14 @@ package ibf2022.batch2.csf.backend.repositories;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -28,8 +31,6 @@ public class ArchiveRepository {
 	// 		name: "name"
 	// 		comments: "comment";
 	// 	})
-	
-	//
 	public String recordBundle(String name, String title, String comment) {
 
 		String bundleId = UUID.randomUUID().toString().substring(0, 8);
@@ -55,10 +56,16 @@ public class ArchiveRepository {
 	// You are free to change the parameter and the return type
 	// Do not change the method's name
 	// Write the native mongo query that you will be using in this method
-	//
-	//
-	public Object getBundleByBundleId(/* any number of parameters here */) {
-		return null;
+
+	// db.getCollection("archives").find({
+	// 	bundleId:"366aebab"
+	// })
+	public Optional<Document> getBundleByBundleId(String id) {
+
+		Criteria criteria = Criteria.where("bundleId").is(id);
+		Query query = new Query(criteria);
+
+		return Optional.of(mgTemplate.findOne(query, Document.class, A_COL));
 	}
 
 	//TODO: Task 6
